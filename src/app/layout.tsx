@@ -17,7 +17,10 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <SignedOut>
-            <SignInButton />
+            <SignInButton
+              forceRedirectUrl={"/api/userAuthCallback"}
+              signUpForceRedirectUrl={"/api/userAuthCallback"}
+            />
           </SignedOut>
           <SignedIn>
             <UserInfo />
