@@ -23,18 +23,25 @@ export function userReqHandler(handler: NextApiHandler): NextApiHandler {
     }
     //otherwise, create a new user in the db with that clerkID, and email and username taken from the clerk auth()
     else {
-      //get the user details from clerk's currentuser
-      const curr = await currentUser();
+      try {
+        //get the user details from clerk's currentuser
+        const curr = await currentUser();
 
-      const newUser = await prisma.user.create({
-        data: {
-          clerkId: userId,
-          email: curr?.emailAddresses[0].emailAddress || "",
-          username: curr?.username || ""
-        }
-      });
-      //attach the newly created user object to the request
-      req.user = newUser;
+        const newUser = await prisma.user.create({
+          data: {
+            clerkId: userId,
+            email: curr?.emailAddresses[0].emailAddress || "",
+            username: curr?.username || ""
+          }
+        });
+        //log the successful db creation
+        console.log("Successfully created new user in the database:", newUser);
+        //attach the newly created user object to the request
+        req.user = newUser;
+      } catch (error) {
+        console.error("Failed to create new user:", error);
+        return res.status(500).json({ error: "Failed to create user" });
+      }
     }
     //return the original handler function, with the user object attached to the request
     return handler(req, res);
