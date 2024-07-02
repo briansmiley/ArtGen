@@ -1,14 +1,17 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { NextApiHandler } from "next";
 import prisma from "../client";
+import { NextResponse } from "next/server";
 
-export function userReqHandler(handler: NextApiHandler): NextApiHandler {
-  return async (req, res) => {
+export function userReqHandler(
+  handler: (req: NextRequest) => Promise<NextResponse>
+): (req: NextRequest) => Promise<NextResponse> {
+  return async (req: NextRequest) => {
     //get the clerk id from the clerk provider using auth()
     const { userId } = auth();
     //if there is no logged in user, this middleware does nothing
     if (!userId) {
-      return handler(req, res);
+      return handler(req);
     }
     //if there is, look up that user in the database by their clerk id
     const user = await prisma.user.findUnique({
@@ -40,10 +43,13 @@ export function userReqHandler(handler: NextApiHandler): NextApiHandler {
         req.user = newUser;
       } catch (error) {
         console.error("Failed to create new user:", error);
-        return res.status(500).json({ error: "Failed to create user" });
+        return NextResponse.json(
+          { error: "Failed to create new user" },
+          { status: 500 }
+        );
       }
     }
     //return the original handler function, with the user object attached to the request
-    return handler(req, res);
+    return handler(req);
   };
 }
