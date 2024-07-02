@@ -11,10 +11,17 @@ export const POST = userReqHandler(async (req: NextRequest) => {
   }
 
   try {
+    if (!req.user?.id) {
+      return NextResponse.json(
+        { error: "User ID is required" },
+        { status: 400 }
+      );
+    }
+
     await prisma.artBlock.create({
       data: {
         color: color,
-        userId: req.user!.id
+        userId: req.user.id
       }
     });
   } catch (error) {

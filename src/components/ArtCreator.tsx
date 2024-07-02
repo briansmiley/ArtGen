@@ -4,7 +4,9 @@ import { useState } from "react";
 import ArtBlock from "./ArtBlock";
 import prisma from "../app/client";
 import { useRouter } from "next/navigation";
-const handleSubmit = async (color: string) => {
+import { auth } from "@clerk/nextjs/server";
+const handleSubmit = async (color: string): Promise<boolean> => {
+  let responseStatus: boolean = false;
   try {
     const response = await fetch("/api/post", {
       method: "POST",
@@ -14,6 +16,8 @@ const handleSubmit = async (color: string) => {
       body: JSON.stringify({ color })
     });
 
+    responseStatus = response.ok;
+
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
@@ -22,6 +26,8 @@ const handleSubmit = async (color: string) => {
     console.log("ArtBlock created:", data);
   } catch (error) {
     console.error("Error creating ArtBlock:", error);
+  } finally {
+    return responseStatus;
   }
 };
 export default function ArtCreator() {
@@ -43,9 +49,9 @@ export default function ArtCreator() {
       </div>
       <button
         className="btn btn-blue mt-3"
-        onClick={() => {
-          handleSubmit(color);
-          router.push("/");
+        onClick={async () => {
+          const ok = await handleSubmit(color);
+          if (ok) router.push("/");
         }}
       >
         Submit
