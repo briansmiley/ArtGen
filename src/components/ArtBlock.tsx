@@ -4,7 +4,7 @@ interface ArtBlockProps {
 
 export default function ArtBlock({ color }: ArtBlockProps) {
   return (
-    <div className="h-10 w-10" style={{ backgroundColor: color }}>
+    <div className="h-[550px] w-[550px]" style={{ backgroundColor: color }}>
       Art.
     </div>
   );
