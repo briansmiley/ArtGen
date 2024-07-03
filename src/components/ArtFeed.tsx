@@ -6,18 +6,18 @@
 import { useEffect, useState } from "react";
 import { ArtBlock as ArtBlockSchema } from "@prisma/client";
 import ArtBlock from "./ArtBlock";
+import { FeedGetResponse } from "@/app/api/feed/route";
 
 export default function ArtFeed() {
   const [artBlocks, setArtBlocks] = useState<ArtBlockSchema[]>([]);
+  const [moreToFetch, setMoreToFetch] = useState(true);
   //function to add 10 more blocks to the feed
-  const fetchArtBlocks = async () => {
+  const fetchArtBlocks = async (): Promise<FeedGetResponse> => {
     try {
-      const lastCreated =
-        artBlocks.length > 0 ? artBlocks[artBlocks.length - 1].createdAt : null;
+      const lastId =
+        artBlocks.length > 0 ? artBlocks[artBlocks.length - 1].id : null;
       const count = 2;
-      const response = await fetch(
-        `/api/feed?lastCreated=${lastCreated}&count=${count}`
-      );
+      const response = await fetch(`/api/feed?lastId=${lastId}&count=${count}`);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -26,13 +26,14 @@ export default function ArtFeed() {
   };
   const fetchMoreArtBlocks = async () => {
     const data = await fetchArtBlocks();
-    setArtBlocks(prev => [...prev, ...data]);
+    setArtBlocks(prev => [...prev, ...data.artBlocks]);
+    setMoreToFetch(data.moreToFetch);
   };
   //fetch one batch of blocks on initial load and clear the feed when unmounted
   useEffect(() => {
-    (async () => setArtBlocks(await fetchArtBlocks()))();
+    (async () => setArtBlocks((await fetchArtBlocks()).artBlocks))();
   }, []);
-
+  // console.log(artBlocks);
   return (
     <div className="flex flex-col items-center justify-center gap-10">
       {artBlocks.map(artBlock => (
@@ -42,8 +43,9 @@ export default function ArtFeed() {
       <button
         className="btn bg-purple-400 mt-3 mb-5"
         onClick={fetchMoreArtBlocks}
+        disabled={!moreToFetch}
       >
-        Load More...
+        {moreToFetch ? "Load More..." : "That's All Folks"}
       </button>
     </div>
   );
