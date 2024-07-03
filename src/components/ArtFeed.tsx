@@ -14,20 +14,23 @@ export default function ArtFeed() {
     try {
       const lastCreated =
         artBlocks.length > 0 ? artBlocks[artBlocks.length - 1].createdAt : null;
-      const count = 10;
+      const count = 2;
       const response = await fetch(
         `/api/feed?lastCreated=${lastCreated}&count=${count}`
       );
       const data = await response.json();
-      setArtBlocks(prevArtBlocks => [...prevArtBlocks, ...data]);
+      return data;
     } catch (error) {
       console.error("Error fetching art blocks:", error);
     }
   };
-  //fetch one batch of blocks on initial load
+  const fetchMoreArtBlocks = async () => {
+    const data = await fetchArtBlocks();
+    setArtBlocks(prev => [...prev, ...data]);
+  };
+  //fetch one batch of blocks on initial load and clear the feed when unmounted
   useEffect(() => {
-    console.log("fetching art blocks");
-    fetchArtBlocks();
+    (async () => setArtBlocks(await fetchArtBlocks()))();
   }, []);
 
   return (
@@ -36,7 +39,10 @@ export default function ArtFeed() {
         <ArtBlock key={artBlock.id} {...artBlock} />
       ))}
       {/* button that calls fetchArtBlocks when clicked */}
-      <button className="btn bg-purple-400 mt-3 mb-5" onClick={fetchArtBlocks}>
+      <button
+        className="btn bg-purple-400 mt-3 mb-5"
+        onClick={fetchMoreArtBlocks}
+      >
         Load More...
       </button>
     </div>
