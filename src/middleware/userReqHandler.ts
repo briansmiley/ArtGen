@@ -1,6 +1,5 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
-import { NextApiHandler } from "next";
-import prisma from "../app/client";
+import prisma from "@/app/client";
 import { NextResponse } from "next/server";
 
 export function userReqHandler(
