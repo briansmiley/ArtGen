@@ -1,8 +1,8 @@
 //extend the NextApiRequest interface to include a User type from our prisma client
 import { User } from "@prisma/client";
-
-declare module "next" {
-  interface NextApiRequest {
+import { NextRequest as OriginalNextRequest } from "next/server";
+declare global {
+  declare interface NextRequest extends OriginalNextRequest {
     user?: User;
   }
 }
