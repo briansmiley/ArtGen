@@ -19,14 +19,7 @@ export default function ArtFeed() {
         `/api/feed?lastCreated=${lastCreated}&count=${count}`
       );
       const data = await response.json();
-      setArtBlocks(prevArtBlocks => {
-        const newArtBlocks = [...prevArtBlocks, ...data];
-        const uniqueArtBlocks = newArtBlocks.filter(
-          (artBlock, index, self) =>
-            index === self.findIndex(t => t.id === artBlock.id)
-        );
-        return uniqueArtBlocks;
-      });
+      setArtBlocks(prevArtBlocks => [...prevArtBlocks, ...data]);
     } catch (error) {
       console.error("Error fetching art blocks:", error);
     }
@@ -43,7 +36,7 @@ export default function ArtFeed() {
         <ArtBlock key={artBlock.id} {...artBlock} />
       ))}
       {/* button that calls fetchArtBlocks when clicked */}
-      <button className="btn bg-purple-400 mt-3" onClick={fetchArtBlocks}>
+      <button className="btn bg-purple-400 mt-3 mb-5" onClick={fetchArtBlocks}>
         Load More...
       </button>
     </div>
