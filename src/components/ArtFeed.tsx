@@ -22,6 +22,7 @@ export default function ArtFeed() {
       return data;
     } catch (error) {
       console.error("Error fetching art blocks:", error);
+      return { artBlocks: [], moreToFetch: false };
     }
   };
   const fetchMoreArtBlocks = async () => {
