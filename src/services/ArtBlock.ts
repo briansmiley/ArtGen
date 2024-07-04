@@ -12,11 +12,14 @@ export interface ArtBlockDataLocal {
   user: { username: string };
 }
 
-export async function postArtBlockToDb(artBlock: ArtBlock, username: string) {
+export async function postArtBlockToDb(
+  artParams: ArtBlockParams,
+  username: string
+) {
   try {
     const createdArtBlock = await prisma.artBlock.create({
       data: {
-        artParams: artBlock.artParams,
+        artParams: JSON.stringify(artParams),
         user: {
           connect: {
             username: username
