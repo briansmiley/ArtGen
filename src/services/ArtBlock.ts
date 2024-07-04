@@ -27,6 +27,7 @@ export async function postArtBlockToDb(
         }
       }
     });
+    console.log("Created ArtBlock:", createdArtBlock);
     return createdArtBlock;
   } catch (error) {
     console.error("Error posting ArtBlock:", error);
