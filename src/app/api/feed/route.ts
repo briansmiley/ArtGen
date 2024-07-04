@@ -12,9 +12,9 @@ export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
   const lastId = params.get("lastId") === "null" ? null : params.get("lastId");
   const count = parseInt(params.get("count"));
-  if (!count || !lastId) {
-    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
-  }
+  // if (!count || !lastId) {
+  //   return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  // }
   const { artBlocks, moreToFetch } = await getArtBlocksFromDb(count, lastId);
   return NextResponse.json({ artBlocks, moreToFetch });
 }
