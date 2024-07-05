@@ -71,5 +71,5 @@ const formatTimeSince = (date: Date): string => {
 };
 //formats a word to adds an s if val is not 1
 const pluralizeWord = (val: number, word: string): string => {
-  return word + (val === 1 ? "word" : "s");
+  return word + (val === 1 ? "" : "s");
 };
