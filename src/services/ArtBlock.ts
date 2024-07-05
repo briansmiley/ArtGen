@@ -12,11 +12,14 @@ export interface ArtBlockDataLocal {
   user: { username: string };
 }
 
-export async function postArtBlockToDb(artBlock: ArtBlock, username: string) {
+export async function postArtBlockToDb(
+  artParams: ArtBlockParams,
+  username: string
+) {
   try {
     const createdArtBlock = await prisma.artBlock.create({
       data: {
-        artParams: artBlock.artParams,
+        artParams: JSON.stringify(artParams), //stringify the params to store in the db
         user: {
           connect: {
             username: username
@@ -24,6 +27,7 @@ export async function postArtBlockToDb(artBlock: ArtBlock, username: string) {
         }
       }
     });
+    console.log("Created ArtBlock:", createdArtBlock);
     return createdArtBlock;
   } catch (error) {
     console.error("Error posting ArtBlock:", error);
@@ -52,13 +56,17 @@ export async function getArtBlocksFromDb(
         }
       }
     });
-    const data = artBlocks.slice(0, count ? count : 1); //slice off the extra block
+    const data = artBlocks.slice(0, count ? count : 1).map(block => ({
+      ...block,
+      artParams: JSON.parse(block.artParams as unknown as string)
+    })); //slice off the extra block
     console.log(
       `Fetched ${artBlocks.length} blocks, sending back ${data.length}:`,
       data
     );
+    console.log(typeof artBlocks[0].artParams);
     return {
-      artBlocks: data as unknown as ArtBlockDataLocal[],
+      artBlocks: data as ArtBlockDataLocal[],
       moreToFetch: artBlocks.length > data.length
     };
   } catch (error) {
