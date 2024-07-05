@@ -13,13 +13,13 @@ const CreateButton = () => {
           <>
             <Link
               href="/create/color"
-              className="bg-blue-500 text-white rounded-lg w-24 h-12 flex items-center justify-center text-2xl no-underline hover:shadow-lg"
+              className="bg-blue-500 text-white rounded-lg w-fit h-fit px-2 py-1 flex items-center justify-center text-l no-underline hover:shadow-lg"
             >
               +Color
             </Link>
             <Link
               href="/create/tree"
-              className="bg-green-500 text-white rounded-lg w-24 h-12 flex items-center justify-center text-2xl no-underline hover:shadow-lg"
+              className="bg-green-500 text-white rounded-lg w-fit h-fit px-2 py-1 flex items-center justify-center text-l no-underline hover:shadow-lg"
             >
               +Tree
             </Link>
