@@ -16,15 +16,29 @@ interface PostDetailsProps {
   createdAt: Date;
   user: { username: string };
 }
+import { Heart } from "lucide-react";
+import { useState } from "react";
+
 const PostDetails = (details: PostDetailsProps) => {
+  const [isLiked, setIsLiked] = useState(false);
   return (
-    <div className="flex flex-col">
-      <div className="text-slate-400 text-xs font-semibold">
-        {formatTimeSince(new Date(details.createdAt))}
+    <div className="flex flex-row justify-between items-start">
+      <div className="flex flex-col">
+        <div className="text-slate-400 text-xs font-semibold">
+          {formatTimeSince(new Date(details.createdAt))}
+        </div>
+        <div className="text-slate-600 text-s font-semibold">
+          {details.user.username}
+        </div>
       </div>
-      <div className="text-slate-600 text-s font-semibold">
-        {details.user.username}
-      </div>
+      <Heart
+        className={`cursor-pointer ${
+          isLiked ? "text-red-500" : "text-gray-500"
+        }`}
+        size={18}
+        fill={isLiked ? "red" : "none"}
+        onClick={() => setIsLiked(!isLiked)}
+      />
     </div>
   );
 };
