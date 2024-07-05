@@ -11,7 +11,6 @@ export default function ColorBlockControls(props: ColorBlockControlProps) {
   //takes in a color from a controlled input and retnders an ArtBlock preview of the resulting color
   return (
     <div className="flex flex-col w-full items-center">
-      {/* <ArtBlock artParams={{ color, artType: "color" }} /> */}
       <div className="flex items-center">
         <label htmlFor="color">Color</label>
         <input
