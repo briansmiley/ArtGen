@@ -49,6 +49,7 @@ const Konvas = (props: KonvasProps) => {
             stroke={branch.color}
             strokeWidth={0}
             rotation={180 + branch.angle}
+            roundEnds={true}
           />
         ))}
       </Layer>
