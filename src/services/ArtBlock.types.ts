@@ -6,10 +6,14 @@ export interface ColorBlockParams {
 }
 export interface TreeBlockParams {
   artType: "tree";
-  branches: number;
-  tilt: number;
+  scaleFactor: number;
   splitAngle: number;
-  minLength: number;
+  tilt: number;
+  minBranchLength: number;
+  treeColor: string;
+  backgroundColor: string;
+  colorStyle: "solid" | "gradient";
+  gradientColor: string | null;
 }
 
 export type ArtBlockParams = ColorBlockParams | TreeBlockParams;
@@ -27,10 +31,14 @@ export function defaultArtBlockParams(
     case "tree":
       return {
         artType: "tree",
-        branches: 5,
-        tilt: 0,
+        scaleFactor: 0.7,
         splitAngle: 30,
-        minLength: 10
+        tilt: 0,
+        minBranchLength: 10,
+        treeColor: "#FFFFFF",
+        backgroundColor: "#444444",
+        colorStyle: "solid",
+        gradientColor: null
       };
     default:
       throw new Error(`Unsupported artType: ${artType}`);
