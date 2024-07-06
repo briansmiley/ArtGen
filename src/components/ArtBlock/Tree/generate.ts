@@ -1,6 +1,6 @@
 import { TreeBlockParams } from "@/services/ArtBlock.types";
 
-interface Branch {
+export interface Branch {
   origin: Point;
   length: number;
   angle: number;
