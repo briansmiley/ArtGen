@@ -5,11 +5,12 @@ interface TrapezoidProps {
   startWidth: number;
   endWidth: number;
   length: number;
-  angle: number;
   fill: string;
   stroke: string;
   strokeWidth: number;
   rotation: number;
+  offsetX?: number;
+  offsetY?: number;
 }
 export const Trapezoid = (props: TrapezoidProps) => {
   return (
@@ -31,6 +32,8 @@ export const Trapezoid = (props: TrapezoidProps) => {
       stroke={props.stroke}
       strokeWidth={props.strokeWidth}
       rotation={props.rotation}
+      offsetX={props.offsetX}
+      offsetY={props.offsetY}
     />
   );
 };

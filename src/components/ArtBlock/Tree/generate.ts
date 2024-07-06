@@ -69,7 +69,7 @@ const makeBranch = (branchParams: makeBranchArgs) => {
 
   const branchEnd = {
     x: branchOrigin.x + branchLength * Math.sin((branchAngle * Math.PI) / 180),
-    y: branchOrigin.y + branchLength * Math.cos((branchAngle * Math.PI) / 180)
+    y: branchOrigin.y - branchLength * Math.cos((branchAngle * Math.PI) / 180)
   };
   //right and left branches differ only in whether we add or subtract the split angle
   const branchAngleOffsets = [

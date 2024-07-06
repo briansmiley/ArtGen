@@ -46,7 +46,7 @@ export function defaultArtBlockParams(
         splitAngle: 30,
         tilt: 0,
         minBranchLength: 8,
-        treeColor: "#FFFFFF",
+        treeColor: "#000000",
         backgroundColor: "#d1d1d1",
         colorStyle: "solid",
         gradientColor: null

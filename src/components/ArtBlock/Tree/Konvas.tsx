@@ -1,4 +1,4 @@
-import { Stage, Layer } from "react-konva";
+import { Stage, Layer, Rect } from "react-konva";
 import { Trapezoid } from "./Trapezoid";
 import { Branch } from "./generate";
 import { K } from "vitest/dist/reporters-yx5ZTtEV.js";
@@ -23,27 +23,37 @@ interface KonvasProps {
   backgroundColor: string;
   branches: Branch[];
 }
-export const Konvas = (props: KonvasProps) => {
+const Konvas = (props: KonvasProps) => {
   const { width, height, backgroundColor, branches } = props;
   return (
     <Stage width={width} height={height}>
       <Layer>
+        {/* background */}
+        <Rect
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+          fill={backgroundColor}
+        />
+        {/* tree branches */}
         {branches.map((branch, idx) => (
           <Trapezoid
             key={`branches${idx}`}
-            x={branch.origin.x}
-            y={branch.origin.y}
+            x={branch.origin.x + width / 2}
+            y={branch.origin.y + height}
             startWidth={branch.startWidth}
             endWidth={branch.endWidth}
             length={branch.length}
-            angle={branch.angle}
             fill={branch.color}
             stroke={branch.color}
             strokeWidth={0}
-            rotation={branch.angle}
+            rotation={180 + branch.angle}
           />
         ))}
       </Layer>
     </Stage>
   );
 };
+
+export default Konvas;
