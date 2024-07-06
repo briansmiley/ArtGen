@@ -6,6 +6,8 @@ export interface ColorBlockParams {
 }
 export interface TreeBlockParams {
   artType: "tree";
+  rootLength: number;
+  rootWeight: number;
   scaleFactor: number;
   splitAngle: number;
   tilt: number;
@@ -32,6 +34,8 @@ export function defaultArtBlockParams(
       return {
         artType: "tree",
         scaleFactor: 0.7,
+        rootLength: 100,
+        rootWeight: 10,
         splitAngle: 30,
         tilt: 0,
         minBranchLength: 10,
