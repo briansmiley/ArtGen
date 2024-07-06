@@ -17,7 +17,14 @@ export interface TreeBlockParams {
   colorStyle: "solid" | "gradient";
   gradientColor: string | null;
 }
-
+export const TreeParamRanges = {
+  rootLength: { min: 50, max: 500, step: 1 },
+  rootWeight: { min: 1, max: 50, step: 1 },
+  scaleFactor: { min: 0.05, max: 0.8, step: 0.01 },
+  splitAngle: { min: 0, max: 180, step: 0.005 },
+  tilt: { min: -180, max: 180, step: 0.005 },
+  minBranchLength: { min: 1, max: 25, step: 1 }
+};
 export type ArtBlockParams = ColorBlockParams | TreeBlockParams;
 
 //export a default function to return default values for each block type
@@ -33,14 +40,14 @@ export function defaultArtBlockParams(
     case "tree":
       return {
         artType: "tree",
-        scaleFactor: 0.7,
-        rootLength: 100,
-        rootWeight: 10,
+        scaleFactor: 0.65,
+        rootLength: 150,
+        rootWeight: 20,
         splitAngle: 30,
         tilt: 0,
-        minBranchLength: 10,
+        minBranchLength: 8,
         treeColor: "#FFFFFF",
-        backgroundColor: "#444444",
+        backgroundColor: "#d1d1d1",
         colorStyle: "solid",
         gradientColor: null
       };
