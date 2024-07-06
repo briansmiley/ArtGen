@@ -55,7 +55,7 @@ const makeBranch = (branchParams: makeBranchArgs) => {
     branchColor
   } = branchParams;
   //stop the recursion if we've sunk below the min branch length
-  if (length < treeInfo.minBranchLength) return;
+  if (branchLength < treeInfo.minBranchLength) return;
   const endWeight = branchWeight * treeInfo.scaleFactor;
   //add the current branch to the branches array
   treeInfo.branches.push({
