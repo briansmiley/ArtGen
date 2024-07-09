@@ -11,6 +11,9 @@ export default function ArtFeedBlock(props: ArtFeedBlockProps) {
       <PostDetails
         createdAt={props.createdAt}
         user={props.user}
+        artId={props.id}
+        liked={props.likedBy.length > 0}
+        likeCount={props.likeCount}
         artType={props.artParams.artType}
       />
     </div>
@@ -20,12 +23,14 @@ interface PostDetailsProps {
   createdAt: Date;
   user: { username: string };
   artType: string;
+  artId: string;
+  liked: boolean;
+  likeCount: number;
 }
-import { Download, Heart } from "lucide-react";
-import { useState } from "react";
+import { Download } from "lucide-react";
+import Likes from "./Likes";
 
 const PostDetails = (details: PostDetailsProps) => {
-  const [isLiked, setIsLiked] = useState(false);
   return (
     <div className="flex flex-row justify-between items-start">
       <div className="flex flex-col">
@@ -36,14 +41,11 @@ const PostDetails = (details: PostDetailsProps) => {
           {details.user.username}
         </div>
       </div>
-      <div className="flex flex-col gap-1">
-        <Heart
-          className={` cursor-pointer ${
-            isLiked ? "text-red-500" : "text-gray-500 hover:text-black"
-          }`}
-          size={18}
-          fill={isLiked ? "red" : "none"}
-          onClick={() => setIsLiked(!isLiked)}
+      <div className="flex flex-col gap-1 items-end">
+        <Likes
+          count={details.likeCount}
+          liked={details.liked}
+          artId={details.artId}
         />
         {details.artType === "tree" && (
           <div
@@ -60,6 +62,7 @@ const PostDetails = (details: PostDetailsProps) => {
     </div>
   );
 };
+
 /**
  * Parses a Date object into a string indicating the number of the biggest chunk timeUnit since its date.
  */
