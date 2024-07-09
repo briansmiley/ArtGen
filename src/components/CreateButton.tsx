@@ -13,13 +13,15 @@ const CreateButton = () => {
           <>
             <Link
               href="/create/color"
-              className="bg-blue-500 text-white rounded-lg w-fit h-fit px-2 py-1 flex items-center justify-center text-l no-underline hover:shadow-lg"
+              className="bg-blue-500 text-white rounded-lg w-fit h-fit px-2 py-1 flex items-center justify-center text-l no-underline hover:shadow-lg tooltip tooltip-left"
+              data-tip="(boring proof of multi-format concept)"
             >
               +Color
             </Link>
             <Link
               href="/create/tree"
-              className="bg-green-500 text-white rounded-lg w-fit h-fit px-2 py-1 flex items-center justify-center text-l no-underline hover:shadow-lg"
+              className="tooltip tooltip-left bg-green-500 text-white rounded-lg w-fit h-fit px-2 py-1 flex items-center justify-center text-l no-underline hover:shadow-lg"
+              // data-tip="Make a new binary tree post"
             >
               +Tree
             </Link>
@@ -27,7 +29,7 @@ const CreateButton = () => {
         )}
         <button
           onClick={() => setShowOptions(!showOptions)}
-          className="bg-purple-500 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl border-none cursor-pointer hover:shadow-lg pb-0.5"
+          className="bg-gradient-to-br from-purple-400 to-purple-500 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl border-none cursor-pointer hover:shadow-lg pb-0.5"
         >
           +
         </button>
