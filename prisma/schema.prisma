@@ -19,6 +19,7 @@ model User {
   clerkId   String     @unique
   email     String     @unique
   username  String     @unique
+  liked     ArtBlock[] @relation("LikedBy")
   artBlocks ArtBlock[]
 }
 
@@ -26,6 +27,8 @@ model ArtBlock {
   id        String   @id @default(cuid())
   artParams Json
   userId    String
+  likeCount Int      @default(0)
+  likedBy   User[]   @relation("LikedBy")
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
 }
