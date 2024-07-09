@@ -41,9 +41,11 @@ export default function ArtFeed() {
   return (
     // Display linear feed of artblocks
     <div className="flex flex-col items-center justify-center gap-10">
-      {artBlocks.map(artBlock => (
-        <ArtFeedBlock key={artBlock.id} {...artBlock} />
-      ))}
+      <div className="flex flex-wrap justify-center gap-10">
+        {artBlocks.map(artBlock => (
+          <ArtFeedBlock key={artBlock.id} {...artBlock} />
+        ))}
+      </div>
       {/* button that calls fetchArtBlocks when clicked */}
       <button
         className="btn bg-purple-400 mt-3 mb-5"
