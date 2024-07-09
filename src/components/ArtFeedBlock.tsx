@@ -8,13 +8,18 @@ export default function ArtFeedBlock(props: ArtFeedBlockProps) {
   return (
     <div className="flex flex-col gap-2">
       <ArtBlock artParams={props.artParams} />
-      <PostDetails createdAt={props.createdAt} user={props.user} />
+      <PostDetails
+        createdAt={props.createdAt}
+        user={props.user}
+        artType={props.artParams.artType}
+      />
     </div>
   );
 }
 interface PostDetailsProps {
   createdAt: Date;
   user: { username: string };
+  artType: string;
 }
 import { Download, Heart } from "lucide-react";
 import { useState } from "react";
@@ -32,10 +37,6 @@ const PostDetails = (details: PostDetailsProps) => {
         </div>
       </div>
       <div className="flex flex-col gap-1">
-        <Download
-          className="cursor-pointer text-gray-500 hover:text-black rounded-sm"
-          size={18}
-        />
         <Heart
           className={` cursor-pointer ${
             isLiked ? "text-red-500" : "text-gray-500 hover:text-black"
@@ -44,6 +45,17 @@ const PostDetails = (details: PostDetailsProps) => {
           fill={isLiked ? "red" : "none"}
           onClick={() => setIsLiked(!isLiked)}
         />
+        {details.artType === "tree" && (
+          <div
+            className="tooltip tooltip-right"
+            data-tip="Right click canvas to save image"
+          >
+            <Download
+              className="cursor-pointer text-gray-500 hover:text-black rounded-sm"
+              size={18}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
