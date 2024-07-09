@@ -6,7 +6,7 @@ export type GetArtBlocksResponse = {
   artBlocks: ArtBlockDataLocal[];
   moreToFetch: boolean;
 };
-export const mode = "dynamic";
+export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   //extract the block count and id of end-of-feed from get params
   const params = req.nextUrl.searchParams;
