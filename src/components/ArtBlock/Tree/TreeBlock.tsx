@@ -7,7 +7,7 @@ type TreeBlockProps = TreeBlockParams;
 
 const TreeBlock = (params: TreeBlockProps) => {
   const { branches, boundaries } = generateTree(params);
-  const size = 500;
+  const size = 350;
   return (
     <div
       style={{
