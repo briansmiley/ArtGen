@@ -6,12 +6,15 @@ import Konvas from "./Konvas";
 type TreeBlockProps = TreeBlockParams;
 
 const TreeBlock = (params: TreeBlockProps) => {
-  const branches = generateTree(params);
-  console.log(branches);
+  const { branches, boundaries } = generateTree(params);
+  const size = 350;
   return (
     <div
-      className="h-[700px] w-[700px]"
-      style={{ backgroundColor: params.backgroundColor }}
+      style={{
+        backgroundColor: params.backgroundColor,
+        width: size,
+        height: size
+      }}
     >
       {/*debug: just display all the param values*/}
       {/* {Object.entries(params).map(([key, value]) => (
@@ -22,8 +25,9 @@ const TreeBlock = (params: TreeBlockProps) => {
       Tree Size: {branches.length} */}
       <Konvas
         branches={branches}
-        width={700}
-        height={700}
+        boundaries={boundaries}
+        width={size}
+        height={size}
         backgroundColor={params.backgroundColor}
       />
     </div>

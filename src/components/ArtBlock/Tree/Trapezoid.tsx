@@ -15,7 +15,7 @@ interface TrapezoidProps {
 }
 export const Trapezoid = (props: TrapezoidProps) => {
   return (
-    <div>
+    <>
       <Line
         x={props.x}
         y={props.y}
@@ -49,6 +49,6 @@ export const Trapezoid = (props: TrapezoidProps) => {
           offsetY={-props.length}
         />
       )}
-    </div>
+    </>
   );
 };

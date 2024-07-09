@@ -8,7 +8,7 @@ export interface Branch {
   endWidth: number;
   color: string;
 }
-interface Point {
+export interface Point {
   x: number;
   y: number;
 }
@@ -17,6 +17,10 @@ interface Point {
 //to be passed down the makeBranch recursion
 interface TreeInfo extends TreeBlockParams {
   branches: Branch[];
+  boundaries: {
+    topLeft: Point;
+    bottomRight: Point;
+  };
 }
 
 /**Takes in the params of a Tree block, returns an array of Branches to render */
@@ -24,7 +28,11 @@ export default function generateTree(params: TreeBlockParams) {
   //make a series of branches based on the params
   //this will be an array of Branch type objects that contain all the information needed to render the tree to the canvas agnostic of render framework
   const branches: Branch[] = [];
-  const treeInfo: TreeInfo = { ...params, branches: branches };
+  const treeInfo: TreeInfo = {
+    ...params,
+    branches: branches,
+    boundaries: { topLeft: { x: 0, y: 0 }, bottomRight: { x: 0, y: 0 } }
+  };
   const rootArgs = {
     treeInfo: treeInfo,
     branchOrigin: { x: 0, y: 0 },
@@ -34,7 +42,7 @@ export default function generateTree(params: TreeBlockParams) {
     branchColor: params.treeColor
   };
   makeBranch(rootArgs);
-  return branches;
+  return { branches, boundaries: treeInfo.boundaries };
 }
 interface makeBranchArgs {
   treeInfo: TreeInfo;
@@ -71,6 +79,23 @@ const makeBranch = (branchParams: makeBranchArgs) => {
     x: branchOrigin.x + branchLength * Math.sin((branchAngle * Math.PI) / 180),
     y: branchOrigin.y - branchLength * Math.cos((branchAngle * Math.PI) / 180)
   };
+  //update the tree's boundaries
+  treeInfo.boundaries.topLeft.x = Math.min(
+    treeInfo.boundaries.topLeft.x,
+    branchEnd.x
+  );
+  treeInfo.boundaries.topLeft.y = Math.min(
+    treeInfo.boundaries.topLeft.y,
+    branchEnd.y
+  );
+  treeInfo.boundaries.bottomRight.x = Math.max(
+    treeInfo.boundaries.bottomRight.x,
+    branchEnd.x
+  );
+  treeInfo.boundaries.bottomRight.y = Math.max(
+    treeInfo.boundaries.bottomRight.y,
+    branchEnd.y
+  );
   //right and left branches differ only in whether we add or subtract the split angle
   const branchAngleOffsets = [
     branchAngle + treeInfo.tilt + treeInfo.splitAngle,
