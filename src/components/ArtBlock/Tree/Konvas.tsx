@@ -1,7 +1,6 @@
 import { Stage, Layer, Rect } from "react-konva";
 import { Trapezoid } from "./Trapezoid";
 import { Branch, Point } from "./generate";
-import { K } from "vitest/dist/reporters-yx5ZTtEV.js";
 
 /**
    interface TrapezoidProps {
