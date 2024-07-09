@@ -1,6 +1,6 @@
 import { Stage, Layer, Rect } from "react-konva";
 import { Trapezoid } from "./Trapezoid";
-import { Branch } from "./generate";
+import { Branch, Point } from "./generate";
 import { K } from "vitest/dist/reporters-yx5ZTtEV.js";
 
 /**
@@ -22,9 +22,18 @@ interface KonvasProps {
   height: number;
   backgroundColor: string;
   branches: Branch[];
+  boundaries: {
+    topLeft: Point;
+    bottomRight: Point;
+  };
 }
 const Konvas = (props: KonvasProps) => {
-  const { width, height, backgroundColor, branches } = props;
+  const { width, height, backgroundColor, branches, boundaries } = props;
+
+  const leftXNegativeSpace = width / 2 + boundaries.topLeft.x; //after placing the tree in the middle of the canvas, its actual left edge is at half width plus its (negative) leftMost end
+  const rightXPositiveSpace = width / 2 - boundaries.bottomRight.x; //for right, rightmost x=0 would mean we have half the width, subtract however far right it reaches
+  const topYNegativeSpace = height - boundaries.topLeft.y; //0 height would leave {height} space, any protrusion up subtracts from that negative space
+  const bottomYPositiveSpace = boundaries.bottomRight.y; //y=0 maps to bottom, so however high its lowest point isis how high above the bottom of canvas minY is
   return (
     <Stage width={width} height={height}>
       <Layer>

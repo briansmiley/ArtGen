@@ -6,8 +6,7 @@ import Konvas from "./Konvas";
 type TreeBlockProps = TreeBlockParams;
 
 const TreeBlock = (params: TreeBlockProps) => {
-  const branches = generateTree(params);
-  console.log(branches);
+  const { branches, boundaries } = generateTree(params);
   return (
     <div
       className="h-[700px] w-[700px]"
@@ -22,6 +21,7 @@ const TreeBlock = (params: TreeBlockProps) => {
       Tree Size: {branches.length} */}
       <Konvas
         branches={branches}
+        boundaries={boundaries}
         width={700}
         height={700}
         backgroundColor={params.backgroundColor}
