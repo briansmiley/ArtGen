@@ -46,8 +46,10 @@ export const Likes = (props: LikesProps) => {
             artId: props.artId,
             adding: !isLiked
           });
-          setIsLiked(res.likedStatus);
-          setLikesCount(res.likeCount);
+          if (res.success) {
+            setIsLiked(res.likedStatus);
+            setLikesCount(res.likeCount);
+          }
         }}
         /**export interface LikeActionResponse {
   success: boolean;

@@ -16,7 +16,7 @@ const fetchArtBlocks = async (
   try {
     const lastId =
       artBlocks.length > 0 ? artBlocks[artBlocks.length - 1].id : null;
-    const count = 5;
+    const count = 6;
     const response = await fetch(`/api/feed?lastId=${lastId}&count=${count}`);
     const data: GetArtBlocksResponse = await response.json();
     return data;
@@ -40,15 +40,21 @@ export default function ArtFeed() {
   }, []);
   return (
     // Display linear feed of artblocks
-    <div className="flex flex-col items-center justify-center gap-10">
-      <div className="flex flex-wrap justify-center gap-10">
+    <div className="flex flex-col items-center justify-center">
+      <span
+        className="text-5xl text-slate-700  mb-5 font-mono font-bold"
+        style={{ textShadow: "1px 1px 3px #002000" }}
+      >
+        GenArt Feed
+      </span>
+      <div className="flex flex-wrap justify-center gap-5 mb-5">
         {artBlocks.map(artBlock => (
           <ArtFeedBlock key={artBlock.id} {...artBlock} />
         ))}
       </div>
       {/* button that calls fetchArtBlocks when clicked */}
       <button
-        className="btn bg-purple-400 mt-3 mb-5"
+        className="btn bg-purple-400 hover:bg-purple-500 mt-3 mb-5"
         onClick={fetchMoreArtBlocks}
         disabled={!moreToFetch}
       >

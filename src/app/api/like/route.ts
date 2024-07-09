@@ -9,7 +9,14 @@ export interface LikeRequestBody {
 
 export const POST = userReqHandler(async (req: NextRequest) => {
   const body: LikeRequestBody = await req.json();
+  if (!req.user) {
+    return NextResponse.json(
+      { success: false, likeCount: null, likedStatus: false },
+      { status: 401 }
+    );
+  }
   const username = req.user.username;
+
   const artId = body?.artId;
   const adding = body?.adding;
   try {

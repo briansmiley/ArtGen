@@ -34,10 +34,10 @@ const PostDetails = (details: PostDetailsProps) => {
   return (
     <div className="flex flex-row justify-between items-start">
       <div className="flex flex-col">
-        <div className="text-slate-400 text-xs font-semibold">
+        <div className="text-slate-600 text-xs font-semibold">
           {formatTimeSince(new Date(details.createdAt))}
         </div>
-        <div className="text-slate-600 text-s font-semibold">
+        <div className="text-slate-700 text-s font-semibold">
           {details.user.username}
         </div>
       </div>
