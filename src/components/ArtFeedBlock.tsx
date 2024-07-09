@@ -16,7 +16,7 @@ interface PostDetailsProps {
   createdAt: Date;
   user: { username: string };
 }
-import { Heart } from "lucide-react";
+import { Download, Heart } from "lucide-react";
 import { useState } from "react";
 
 const PostDetails = (details: PostDetailsProps) => {
@@ -31,14 +31,20 @@ const PostDetails = (details: PostDetailsProps) => {
           {details.user.username}
         </div>
       </div>
-      <Heart
-        className={`cursor-pointer ${
-          isLiked ? "text-red-500" : "text-gray-500"
-        }`}
-        size={18}
-        fill={isLiked ? "red" : "none"}
-        onClick={() => setIsLiked(!isLiked)}
-      />
+      <div className="flex flex-col gap-1">
+        <Download
+          className="cursor-pointer text-gray-500 hover:text-black rounded-sm"
+          size={18}
+        />
+        <Heart
+          className={` cursor-pointer ${
+            isLiked ? "text-red-500" : "text-gray-500 hover:text-black"
+          }`}
+          size={18}
+          fill={isLiked ? "red" : "none"}
+          onClick={() => setIsLiked(!isLiked)}
+        />
+      </div>
     </div>
   );
 };
