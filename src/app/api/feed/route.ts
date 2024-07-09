@@ -13,7 +13,7 @@ export const GET = userReqHandler(async (req: NextRequest) => {
   const params = req.nextUrl.searchParams;
   const lastId = params.get("lastId") === "null" ? null : params.get("lastId");
   const count = parseInt(params.get("count"));
-  const username = req.user?.username ? req.user.username : null;
+  const username = req.user?.username ? req.user.username : "";
   // if (!count || !lastId) {
   //   return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   // }
