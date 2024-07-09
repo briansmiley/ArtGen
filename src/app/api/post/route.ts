@@ -1,5 +1,4 @@
 import { userReqHandler } from "@/middleware/userReqHandler";
-import prisma from "../../client";
 import { NextResponse } from "next/server";
 import { postArtBlockToDb } from "@/services/ArtBlock";
 
