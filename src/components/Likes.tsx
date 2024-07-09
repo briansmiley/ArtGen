@@ -38,6 +38,10 @@ export const Likes = (props: LikesProps) => {
         size={18}
         fill={isLiked ? "red" : "none"}
         onClick={async () => {
+          //instantaneous optimistic update
+          setIsLiked(!isLiked);
+          setLikesCount(isLiked ? likesCount - 1 : likesCount + 1);
+          //...then make the actual like query and update accordingly
           const res = await handleLikeClick({
             artId: props.artId,
             adding: !isLiked
