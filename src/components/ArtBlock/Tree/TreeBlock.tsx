@@ -2,8 +2,7 @@ import { TreeBlockParams } from "@/services/ArtBlock.types";
 import { useEffect } from "react";
 import generateTree from "./generate";
 import Konvas from "./Konvas";
-
-type TreeBlockProps = TreeBlockParams;
+import { Tree } from ".";
 
 const TreeBlock = (params: TreeBlockProps) => {
   const { branches, boundaries } = generateTree(params);
@@ -26,9 +25,9 @@ const TreeBlock = (params: TreeBlockProps) => {
       <Konvas
         branches={branches}
         boundaries={boundaries}
-        width={size}
-        height={size}
-        backgroundColor={params.backgroundColor}
+        width={params.size}
+        height={params.size}
+        backgroundColor={params.artParams.backgroundColor}
       />
     </div>
   );

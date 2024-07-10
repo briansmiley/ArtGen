@@ -1,13 +1,14 @@
-import { ColorBlockParams } from "@/services/ArtBlock.types";
+import { Color } from ".";
 
-type ColorBlockProps = ColorBlockParams;
-
-export default function ColorBlock(params: ColorBlockProps) {
-  const size = 300;
+const ColorBlock: Color["Display"] = params => {
   return (
     <div
-      className="h-[350px] w-[350px]"
-      style={{ backgroundColor: params.color }}
+      style={{
+        width: params.size,
+        height: params.size,
+        backgroundColor: params.artParams.color
+      }}
     ></div>
   );
-}
+};
+export default ColorBlock;
