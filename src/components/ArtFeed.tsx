@@ -28,16 +28,22 @@ const fetchArtBlocks = async (
 export default function ArtFeed() {
   const [artBlocks, setArtBlocks] = useState<ArtBlockDataLocal[]>([]); //array of ArtBlockDataLocal objects
   const [moreToFetch, setMoreToFetch] = useState(true); //flag sets to false when db says we have exhausted all blocks
+  const [loading, setLoading] = useState(false); //flag to show loading state
   //Fetch a batch of blocks and add them to state
   const fetchMoreArtBlocks = async () => {
+    setLoading(true);
     const data = await fetchArtBlocks(artBlocks);
     setArtBlocks(prev => [...prev, ...data.artBlocks]);
     setMoreToFetch(data.moreToFetch);
+    setLoading(false);
   };
 
   //fetch *one* batch of blocks on initial load
   useEffect(() => {
-    (async () => setArtBlocks((await fetchArtBlocks(artBlocks)).artBlocks))();
+    setLoading(true);
+    const initialSet = async () =>
+      setArtBlocks((await fetchArtBlocks(artBlocks)).artBlocks);
+    initialSet().then(() => setLoading(false));
   }, []);
   return (
     // Display linear feed of artblocks
@@ -49,11 +55,14 @@ export default function ArtFeed() {
         GenArt Feed
       </span>
       <div className="flex flex-wrap justify-center gap-5 mb-5">
-        {artBlocks.length > 0
-          ? artBlocks.map(artBlock => (
-              <ArtFeedBlock key={artBlock.id} {...artBlock} />
-            ))
-          : [...Array(6)].map((_, i) => <ArtBlockSkeleton key={i} />)}
+        {artBlocks.map(artBlock => (
+          <ArtFeedBlock key={artBlock.id} {...artBlock} />
+        ))}
+        {loading ? (
+          [...Array(6)].map((_, i) => <ArtBlockSkeleton key={i} />)
+        ) : (
+          <></>
+        )}
       </div>
       {/* button that calls fetchArtBlocks when clicked */}
       <button
@@ -67,6 +76,7 @@ export default function ArtFeed() {
   );
 }
 
+//placeholder skeletons for loading state
 const ArtBlockSkeleton = () => {
   return (
     <div className="flex flex-col gap-2">
