@@ -10,6 +10,8 @@ import { ArtBlockDataLocal } from "@/services/ArtBlock";
 import ArtFeedBlock from "./ArtFeedBlock";
 import ArtBlockModal from "./ArtBlockModal";
 
+//hard coded for now size for feed blocks
+const feedBlockSize = 300;
 /**Query db for a batch of blocks and whether there are more to get */
 const fetchArtBlocks = async (
   artBlocks: ArtBlockDataLocal[]
@@ -55,6 +57,7 @@ export default function ArtFeed() {
       setArtBlocks((await fetchArtBlocks(artBlocks)).artBlocks);
     initialSet().then(() => setLoading(false));
   }, []);
+
   return (
     // Display linear feed of artblocks
     <div className="flex flex-col items-center justify-center">
@@ -81,7 +84,9 @@ export default function ArtFeed() {
           />
         ))}
         {loading ? (
-          [...Array(6)].map((_, i) => <ArtBlockSkeleton key={i} />)
+          [...Array(6)].map((_, i) => (
+            <ArtBlockSkeleton size={feedBlockSize} key={i} />
+          ))
         ) : (
           <></>
         )}
@@ -105,17 +110,32 @@ export default function ArtFeed() {
 }
 
 //placeholder skeletons for loading state
-const ArtBlockSkeleton = () => {
+const ArtBlockSkeleton = ({ size }: { size: number }) => {
   return (
     <div className="flex flex-col gap-2">
-      <div className="skeleton h-[350px] w-[350px] rounded-xl  animate-pulse "></div>
+      <div
+        className="skeleton rounded-xl animate-pulse"
+        style={{ height: size, width: size }}
+      ></div>
       <div className="flex justify-between">
-        <div className="skeleton w-[150px] h-[30px] rounded-xl  animate-pulse"></div>
-        <div className="skeleton w-[50px] h-[30px] rounded-full  animate-pulse"></div>
+        <div
+          className="skeleton rounded-xl animate-pulse"
+          style={{ width: (150 / 350) * size, height: (30 / 350) * size }}
+        ></div>
+        <div
+          className="skeleton rounded-full animate-pulse"
+          style={{ width: (50 / 350) * size, height: (30 / 350) * size }}
+        ></div>
       </div>
       <div className="flex justify-between">
-        <div className="skeleton w-[150px] h-[30px] rounded-xl  animate-pulse"></div>
-        <div className="skeleton w-[30px] h-[30px] rounded-full  animate-pulse"></div>
+        <div
+          className="skeleton rounded-xl animate-pulse"
+          style={{ width: (150 / 350) * size, height: (30 / 350) * size }}
+        ></div>
+        <div
+          className="skeleton rounded-full animate-pulse"
+          style={{ width: (30 / 350) * size, height: (30 / 350) * size }}
+        ></div>
       </div>
     </div>
   );
