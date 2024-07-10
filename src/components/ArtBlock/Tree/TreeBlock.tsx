@@ -1,12 +1,14 @@
 import { TreeBlockParams } from "@/services/ArtBlock.types";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import generateTree from "./generate";
 import Konvas from "./Konvas";
 import { Tree } from ".";
 
-const TreeBlock = (params: TreeBlockProps) => {
-  const { branches, boundaries } = generateTree(params);
-  const size = 350;
+const TreeBlock: Tree["Display"] = params => {
+  const { branches, boundaries } = useMemo(
+    () => generateTree(params.artParams),
+    [params]
+  );
   return (
     <div
       style={{
