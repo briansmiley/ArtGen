@@ -96,7 +96,7 @@ export default function ArtFeed() {
         <span className="loading loading-dots loading-lg "></span>
       ) : (
         <button
-          className="btn bg-purple-400 hover:bg-purple-500 mt-3 mb-5"
+          className="btn bg-purple-400 hover:bg-purple-500 border-none mt-3 mb-5"
           onClick={loading ? undefined : fetchMoreArtBlocks}
           disabled={!moreToFetch}
         >

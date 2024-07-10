@@ -37,7 +37,7 @@ export default function ArtSubmitButton({ artParams }: ArtSubmitButtonProps) {
   const router = useRouter();
   return (
     <button
-      className="btn btn-blue mt-3"
+      className="btn btn-blue mt-3 border-none"
       onClick={async () => {
         const ok = await handleSubmit(artParams);
         if (ok) router.push("/");
