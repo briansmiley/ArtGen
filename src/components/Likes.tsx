@@ -30,10 +30,10 @@ export const Likes = (props: LikesProps) => {
   }, []);
   return (
     <div className="flex flex-row gap-1 items-center">
-      <span className="font-semibold">{likesCount}</span>
+      <span className="font-semibold ">{likesCount}</span>
       <Heart
         className={` cursor-pointer ${
-          isLiked ? "text-red-500" : "text-gray-500 hover:text-black"
+          isLiked ? "text-red-500" : "text-slate-700 hover:text-black"
         }`}
         size={18}
         fill={isLiked ? "red" : "none"}
