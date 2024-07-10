@@ -53,7 +53,7 @@ const PostDetails = (details: PostDetailsProps) => {
             data-tip="Right click canvas to save image"
           >
             <Download
-              className="cursor-pointer text-gray-500 hover:text-black rounded-sm"
+              className="cursor-pointer text-slate-700 hover:text-black rounded-sm"
               size={18}
             />
           </div>
