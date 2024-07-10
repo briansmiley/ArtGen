@@ -4,7 +4,7 @@ import TreeBlockControls from "./TreeBlockControls";
 import { BlockInterface } from "../Block.types";
 
 type TreeProps = TreeBlockParams;
-type Tree = BlockInterface<"tree", TreeProps>;
+export type Tree = BlockInterface<"tree", TreeProps>;
 
 const tree: Tree = {
   artType: "tree",

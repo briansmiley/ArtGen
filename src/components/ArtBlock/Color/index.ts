@@ -4,9 +4,9 @@ import ColorBlock from "./ColorBlock";
 import { BlockInterface } from "../Block.types";
 
 type BlockProps = ColorBlockParams;
-type Block = BlockInterface<"color", BlockProps>;
+export type Color = BlockInterface<"color", BlockProps>;
 
-const color: Block = {
+const color: Color = {
   artType: "color",
   Control: ColorBlockControls,
   Display: ColorBlock

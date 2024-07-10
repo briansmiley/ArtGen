@@ -1,13 +1,28 @@
+"use client";
 //takes in ArtBlockLocal data as fetched for the feed and displays an ArtBlock using the params along with a created date and user attribution
 import ArtBlock from "./ArtBlock";
 import { ArtBlockDataLocal } from "@/services/ArtBlock";
 
-type ArtFeedBlockProps = ArtBlockDataLocal;
+type ArtFeedBlockProps = ArtBlockDataLocal & {
+  onFullscreenClick: () => void;
+  size: number;
+};
 
-export default function ArtFeedBlock(props: ArtFeedBlockProps) {
+function ArtFeedBlock(props: ArtFeedBlockProps) {
   return (
     <div className="flex flex-col gap-2">
-      <ArtBlock artParams={props.artParams} />
+      <div className="relative group">
+        <ArtBlock
+          artParams={props.artParams}
+          size={props.size}
+          onTouchStart={props.onFullscreenClick}
+        />
+        <Fullscreen
+          className="hidden absolute top-2 right-2 cursor-pointer hover:bg-slate-200 hover:bg-opacity-50 rounded-xl p-0.5 group-hover:block"
+          size={32}
+          onClick={props.onFullscreenClick}
+        />
+      </div>
       <PostDetails
         createdAt={props.createdAt}
         user={props.user}
@@ -27,8 +42,9 @@ interface PostDetailsProps {
   liked: boolean;
   likeCount: number;
 }
-import { Download } from "lucide-react";
+import { Download, Fullscreen } from "lucide-react";
 import Likes from "./Likes";
+import React, { useState } from "react";
 
 const PostDetails = (details: PostDetailsProps) => {
   return (
@@ -53,7 +69,7 @@ const PostDetails = (details: PostDetailsProps) => {
             data-tip="Right click canvas to save image"
           >
             <Download
-              className="cursor-pointer text-slate-700 hover:text-black rounded-sm"
+              className="cursor-pointer  hover:text-black rounded-sm"
               size={18}
             />
           </div>
@@ -83,7 +99,7 @@ const formatTimeSince = (date: Date): string => {
     unit => secondsSince < unit.seconds * unit.max
   ); //find the smallest unit where we are under the threshhold to move on to a bigger unit
   if (!timeUnit)
-    return "a long time ago"; //if we can't find a unit, return a generic message
+    return "a long time ago"; //if we can't find a unit, return a ––––ic message
   else {
     const { unit, seconds } = timeUnit;
     const unitsSince = Math.floor(secondsSince / seconds);
@@ -94,3 +110,5 @@ const formatTimeSince = (date: Date): string => {
 const pluralizeWord = (val: number, word: string): string => {
   return word + (val === 1 ? "" : "s");
 };
+
+export default React.memo(ArtFeedBlock);

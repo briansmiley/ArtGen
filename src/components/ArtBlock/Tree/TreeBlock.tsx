@@ -1,19 +1,20 @@
 import { TreeBlockParams } from "@/services/ArtBlock.types";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import generateTree from "./generate";
 import Konvas from "./Konvas";
+import { Tree } from ".";
 
-type TreeBlockProps = TreeBlockParams;
-
-const TreeBlock = (params: TreeBlockProps) => {
-  const { branches, boundaries } = generateTree(params);
-  const size = 350;
+const TreeBlock: Tree["Display"] = params => {
+  const { branches, boundaries } = useMemo(
+    () => generateTree(params.artParams),
+    [params]
+  );
   return (
     <div
       style={{
-        backgroundColor: params.backgroundColor,
-        width: size,
-        height: size
+        backgroundColor: params.artParams.backgroundColor
+        // width: params.size,
+        // height: params.size
       }}
     >
       {/*debug: just display all the param values*/}
@@ -26,9 +27,9 @@ const TreeBlock = (params: TreeBlockProps) => {
       <Konvas
         branches={branches}
         boundaries={boundaries}
-        width={size}
-        height={size}
-        backgroundColor={params.backgroundColor}
+        width={params.size}
+        height={params.size}
+        backgroundColor={params.artParams.backgroundColor}
       />
     </div>
   );

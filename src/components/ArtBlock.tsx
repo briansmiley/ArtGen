@@ -8,13 +8,17 @@ import { ComponentProps } from "react";
 const SupportedArtBlocks = [color, tree];
 
 // we want to set artParams to be a union of all the possible params for each supported art block
-type SupportedArtBlocksParams = ComponentProps<
+type SupportedDisplayParams = ComponentProps<
   (typeof SupportedArtBlocks)[number]["Display"]
 >;
 
 export interface ArtBlockProps {
-  artParams: SupportedArtBlocksParams;
+  artParams: SupportedDisplayParams["artParams"];
+  size?: SupportedDisplayParams["size"];
+  onTouchStart?: (e: React.TouchEvent<HTMLDivElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
+
 // union of types and params for the supported art blocks
 // if tree block, we want treeblock component and treeblock params
 
@@ -23,17 +27,26 @@ export default function ArtBlock(props: ArtBlockProps) {
 
   switch (artType) {
     case "color":
-      return <color.Display {...props.artParams} />;
+      return (
+        <div onClick={props.onClick} onTouchStart={props.onTouchStart}>
+          <color.Display artParams={props.artParams} size={props.size || 350} />
+        </div>
+      );
     case "tree":
-      return <tree.Display {...props.artParams} />;
+      return (
+        <div onClick={props.onClick} onTouchStart={props.onTouchStart}>
+          <tree.Display artParams={props.artParams} size={props.size || 350} />
+        </div>
+      );
     default:
       throw new Error(`No art block found for artType: ${artType}`);
   }
 }
 
-export interface ArtBlockControlsProps extends ArtBlockProps {
-  setParams: (params: SupportedArtBlocksParams) => void;
-}
+export type ArtBlockControlsProps = {
+  artParams: SupportedDisplayParams["artParams"];
+  setParams: (params: SupportedDisplayParams["artParams"]) => void;
+};
 export function ArtBlockControls(props: ArtBlockControlsProps) {
   const artType = props.artParams.artType;
 
