@@ -34,6 +34,7 @@ export default function ArtFeed() {
     setArtBlocks(prev => [...prev, ...data.artBlocks]);
     setMoreToFetch(data.moreToFetch);
   };
+
   //fetch *one* batch of blocks on initial load
   useEffect(() => {
     (async () => setArtBlocks((await fetchArtBlocks(artBlocks)).artBlocks))();
@@ -48,13 +49,15 @@ export default function ArtFeed() {
         GenArt Feed
       </span>
       <div className="flex flex-wrap justify-center gap-5 mb-5">
-        {artBlocks.map(artBlock => (
-          <ArtFeedBlock key={artBlock.id} {...artBlock} />
-        ))}
+        {artBlocks.length > 0
+          ? artBlocks.map(artBlock => (
+              <ArtFeedBlock key={artBlock.id} {...artBlock} />
+            ))
+          : [...Array(6)].map((_, i) => <ArtBlockSkeleton key={i} />)}
       </div>
       {/* button that calls fetchArtBlocks when clicked */}
       <button
-        className="btn bg-purple-400 hover:bg-purple-500 mt-3 mb-5"
+        className="btn bg-purple-400 hover:bg-purple-500 text-slate-700 mt-3 mb-5"
         onClick={fetchMoreArtBlocks}
         disabled={!moreToFetch}
       >
@@ -63,3 +66,19 @@ export default function ArtFeed() {
     </div>
   );
 }
+
+const ArtBlockSkeleton = () => {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="skeleton h-[350px] w-[350px] rounded-xl  animate-pulse "></div>
+      <div className="flex justify-between">
+        <div className="skeleton w-[150px] h-[30px] rounded-xl  animate-pulse"></div>
+        <div className="skeleton w-[50px] h-[30px] rounded-full  animate-pulse"></div>
+      </div>
+      <div className="flex justify-between">
+        <div className="skeleton w-[150px] h-[30px] rounded-xl  animate-pulse"></div>
+        <div className="skeleton w-[30px] h-[30px] rounded-full  animate-pulse"></div>
+      </div>
+    </div>
+  );
+};
