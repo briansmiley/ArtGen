@@ -49,7 +49,7 @@ export default function ArtFeed() {
     // Display linear feed of artblocks
     <div className="flex flex-col items-center justify-center">
       <span
-        className="text-5xl text-slate-700  mb-5 font-mono font-bold"
+        className="text-5xl   mb-5 font-mono font-bold"
         style={{ textShadow: "1px 1px 3px #002000" }}
       >
         GenArt Feed
@@ -65,13 +65,19 @@ export default function ArtFeed() {
         )}
       </div>
       {/* button that calls fetchArtBlocks when clicked */}
-      <button
-        className="btn bg-purple-400 hover:bg-purple-500 text-slate-700 mt-3 mb-5"
-        onClick={fetchMoreArtBlocks}
-        disabled={!moreToFetch}
-      >
-        {moreToFetch ? "Load More..." : "That's All Folks"}
-      </button>
+      {loading ? (
+        <span className="loading loading-dots loading-lg "></span>
+      ) : (
+        <button
+          className="btn bg-purple-400 hover:bg-purple-500 mt-3 mb-5"
+          onClick={loading ? undefined : fetchMoreArtBlocks}
+          disabled={!moreToFetch}
+        >
+          <span className="text-slate-700">
+            {moreToFetch ? "Load More..." : "That's All Folks"}
+          </span>
+        </button>
+      )}
     </div>
   );
 }
