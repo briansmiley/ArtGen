@@ -10,9 +10,9 @@ const TreeBlock = (params: TreeBlockProps) => {
   return (
     <div
       style={{
-        backgroundColor: params.backgroundColor,
-        width: size,
-        height: size
+        backgroundColor: params.artParams.backgroundColor
+        // width: params.size,
+        // height: params.size
       }}
     >
       {/*debug: just display all the param values*/}
