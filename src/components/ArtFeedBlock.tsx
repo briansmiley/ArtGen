@@ -3,24 +3,21 @@
 import ArtBlock from "./ArtBlock";
 import { ArtBlockDataLocal } from "@/services/ArtBlock";
 
-type ArtFeedBlockProps = ArtBlockDataLocal;
+type ArtFeedBlockProps = ArtBlockDataLocal & {
+  onFullscreenClick: () => void;
+  size: number;
+};
 
-export default function ArtFeedBlock(props: ArtFeedBlockProps) {
-  const [showFullscreen, setShowFullscreen] = useState(false);
+function ArtFeedBlock(props: ArtFeedBlockProps) {
   return (
     <div className="flex flex-col gap-2">
-      <div
-        className="relative"
-        onMouseEnter={() => setShowFullscreen(true)}
-        onMouseLeave={() => setShowFullscreen(false)}
-      >
-        <ArtBlock artParams={props.artParams} />
-        {showFullscreen && (
-          <Fullscreen
-            className="absolute top-2 right-2 hover:bg-slate-200 hover:opacity-90 rounded-xl p-1"
-            size={32}
-          />
-        )}
+      <div className="relative group">
+        <ArtBlock artParams={props.artParams} size={props.size} />
+        <Fullscreen
+          className="hidden absolute top-2 right-2 cursor-pointer hover:bg-slate-200 hover:bg-opacity-50 rounded-xl p-0.5 group-hover:block"
+          size={32}
+          onClick={props.onFullscreenClick}
+        />
       </div>
       <PostDetails
         createdAt={props.createdAt}
@@ -43,7 +40,7 @@ interface PostDetailsProps {
 }
 import { Download, Fullscreen } from "lucide-react";
 import Likes from "./Likes";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const PostDetails = (details: PostDetailsProps) => {
   return (
@@ -98,7 +95,7 @@ const formatTimeSince = (date: Date): string => {
     unit => secondsSince < unit.seconds * unit.max
   ); //find the smallest unit where we are under the threshhold to move on to a bigger unit
   if (!timeUnit)
-    return "a long time ago"; //if we can't find a unit, return a generic message
+    return "a long time ago"; //if we can't find a unit, return a ––––ic message
   else {
     const { unit, seconds } = timeUnit;
     const unitsSince = Math.floor(secondsSince / seconds);
@@ -109,3 +106,5 @@ const formatTimeSince = (date: Date): string => {
 const pluralizeWord = (val: number, word: string): string => {
   return word + (val === 1 ? "" : "s");
 };
+
+export default React.memo(ArtFeedBlock);
