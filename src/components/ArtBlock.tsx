@@ -15,6 +15,8 @@ type SupportedDisplayParams = ComponentProps<
 export interface ArtBlockProps {
   artParams: SupportedDisplayParams["artParams"];
   size?: SupportedDisplayParams["size"];
+  onTouchStart?: (e: React.TouchEvent<HTMLDivElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 // union of types and params for the supported art blocks
@@ -26,11 +28,15 @@ export default function ArtBlock(props: ArtBlockProps) {
   switch (artType) {
     case "color":
       return (
-        <color.Display artParams={props.artParams} size={props.size || 350} />
+        <div onClick={props.onClick} onTouchStart={props.onTouchStart}>
+          <color.Display artParams={props.artParams} size={props.size || 350} />
+        </div>
       );
     case "tree":
       return (
-        <tree.Display artParams={props.artParams} size={props.size || 350} />
+        <div onClick={props.onClick} onTouchStart={props.onTouchStart}>
+          <tree.Display artParams={props.artParams} size={props.size || 350} />
+        </div>
       );
     default:
       throw new Error(`No art block found for artType: ${artType}`);

@@ -12,7 +12,11 @@ function ArtFeedBlock(props: ArtFeedBlockProps) {
   return (
     <div className="flex flex-col gap-2">
       <div className="relative group">
-        <ArtBlock artParams={props.artParams} size={props.size} />
+        <ArtBlock
+          artParams={props.artParams}
+          size={props.size}
+          onTouchStart={props.onFullscreenClick}
+        />
         <Fullscreen
           className="hidden absolute top-2 right-2 cursor-pointer hover:bg-slate-200 hover:bg-opacity-50 rounded-xl p-0.5 group-hover:block"
           size={32}
