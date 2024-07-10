@@ -8,7 +8,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en" className="h-full">
+      <html lang="en" className="h-full text-slate-700">
         <body className="h-full">
           {/* background gradient */}
           <div className="fixed inset-0 bg-gradient-to-br from-purple-400 to-teal-400 -z-10" />
