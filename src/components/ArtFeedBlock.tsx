@@ -1,3 +1,4 @@
+"use client";
 //takes in ArtBlockLocal data as fetched for the feed and displays an ArtBlock using the params along with a created date and user attribution
 import ArtBlock from "./ArtBlock";
 import { ArtBlockDataLocal } from "@/services/ArtBlock";
@@ -5,9 +6,22 @@ import { ArtBlockDataLocal } from "@/services/ArtBlock";
 type ArtFeedBlockProps = ArtBlockDataLocal;
 
 export default function ArtFeedBlock(props: ArtFeedBlockProps) {
+  const [showFullscreen, setShowFullscreen] = useState(false);
   return (
     <div className="flex flex-col gap-2">
-      <ArtBlock artParams={props.artParams} />
+      <div
+        className="relative"
+        onMouseEnter={() => setShowFullscreen(true)}
+        onMouseLeave={() => setShowFullscreen(false)}
+      >
+        <ArtBlock artParams={props.artParams} />
+        {showFullscreen && (
+          <Fullscreen
+            className="absolute top-2 right-2 hover:bg-slate-200 hover:opacity-90 rounded-xl p-1"
+            size={32}
+          />
+        )}
+      </div>
       <PostDetails
         createdAt={props.createdAt}
         user={props.user}
@@ -27,8 +41,9 @@ interface PostDetailsProps {
   liked: boolean;
   likeCount: number;
 }
-import { Download } from "lucide-react";
+import { Download, Fullscreen } from "lucide-react";
 import Likes from "./Likes";
+import { useState } from "react";
 
 const PostDetails = (details: PostDetailsProps) => {
   return (
@@ -53,7 +68,7 @@ const PostDetails = (details: PostDetailsProps) => {
             data-tip="Right click canvas to save image"
           >
             <Download
-              className="cursor-pointer text-slate-700 hover:text-black rounded-sm"
+              className="cursor-pointer  hover:text-black rounded-sm"
               size={18}
             />
           </div>
