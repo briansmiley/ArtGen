@@ -33,13 +33,13 @@ const ArtBlockModal = ({ blockData, closeOnClick }: ArtBlockModalProps) => {
           downloadSetter={setDownloadCallback}
         />
         <X
-          className="absolute top-2 right-2 cursor-pointer hover:bg-slate-600 hover:text-slate-200 rounded-full"
+          className="absolute top-2 right-2 cursor-pointer bg-slate-600 text-slate-200 opacity-50 hover:opacity-95 rounded-full"
           size={size / 20}
           onClick={closeOnClick}
         />
         <Download
-          className="absolute bottom-2 right-2 cursor-pointer  hover:text-slate-900"
-          size={size / 20}
+          className="absolute bottom-2 right-2 cursor-pointer bg-slate-600 text-slate-200 opacity-50 hover:opacity-95 p-2 rounded-full"
+          size={5 + size / 20}
           onClick={downloadCallback.callback}
         />
       </div>
