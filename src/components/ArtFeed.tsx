@@ -15,24 +15,29 @@ import useTap from "@/app/hooks/useTap";
 interface BlockSizeArgs {
   s: number; //number of blocks to fit on small screens
   l: number; //number of blocks to fit on large screens
+  breakpoint: number; //breakpoint for switching from small to large
 }
 //calculates the size of an artblock to fit
-const blockSize = (counts: BlockSizeArgs) => {
-  const breakpoint = 640; //when to switch from small to large
-  const rowCount = window.innerWidth < breakpoint ? counts.s : counts.l;
-  return (window.innerWidth / rowCount) * 0.8;
+const blockSize = () => {
+  return (window.innerWidth / blocksPerRow()) * 0.8;
 };
-const counts = { s: 3, l: 5 }; //hard coded data for how mnay blocks to fit on small and large screens
-const initialBlockSize = blockSize(counts); //initial value for useState
+const blocksPerRow = () => {
+  const counts = { s: 3, l: 5, breakpoint: 640 }; //hard coded data for how mnay blocks to fit on small and large screens
+  return window.innerWidth < counts.breakpoint ? counts.s : counts.l;
+};
+const initialBlockSize = blockSize(); //initial value for useState
 /**Query db for a batch of blocks and whether there are more to get */
 const fetchArtBlocks = async (
-  artBlocks: ArtBlockDataLocal[]
+  artBlocks: ArtBlockDataLocal[],
+  rowsToFetch: number = 2
 ): Promise<GetArtBlocksResponse> => {
+  const blockFetchCount = rowsToFetch * blocksPerRow();
   try {
     const lastId =
       artBlocks.length > 0 ? artBlocks[artBlocks.length - 1].id : null;
-    const count = 6;
-    const response = await fetch(`/api/feed?lastId=${lastId}&count=${count}`);
+    const response = await fetch(
+      `/api/feed?lastId=${lastId}&count=${blockFetchCount}`
+    );
     const data: GetArtBlocksResponse = await response.json();
     return data;
   } catch (error) {
@@ -65,7 +70,7 @@ export default function ArtFeed() {
 
   //one time useEffect to set up a resizer for blocks at window resize
   useEffect(() => {
-    const changeBlockSize = () => setFeedBlockSize(blockSize(counts));
+    const changeBlockSize = () => setFeedBlockSize(blockSize());
     window.addEventListener("resize", changeBlockSize);
     return () => window.removeEventListener("resize", changeBlockSize);
   }, []);
@@ -103,7 +108,7 @@ export default function ArtFeed() {
           />
         ))}
         {loading ? (
-          [...Array(6)].map((_, i) => (
+          [...Array(blocksPerRow() * 2)].map((_, i) => (
             <ArtBlockSkeleton size={feedBlockSize} key={i} />
           ))
         ) : (
