@@ -5,14 +5,21 @@ import Konvas from "./Konvas";
 import { Tree } from ".";
 import Konva from "konva";
 
-const downloadCallback = (canvasRef: React.RefObject<Konva.Stage>) => {
+const downloadCallback = (
+  canvasRef: React.RefObject<Konva.Stage>,
+  downloadSize: number = 1500
+) => {
   return () => {
     if (!canvasRef.current) {
       console.error("canvasRef is null");
     }
     const link = document.createElement("a");
     link.download = "tree.png";
-    link.href = canvasRef.current.toDataURL();
+    const canvas = canvasRef.current;
+    const canvasWidth = canvas.width();
+    link.href = canvasRef.current.toDataURL({
+      pixelRatio: downloadSize / canvasWidth
+    });
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
