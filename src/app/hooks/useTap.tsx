@@ -15,7 +15,7 @@ const useTap = () => {
     if (!draggingRef.current) callback();
     draggingRef.current = false;
   };
-  return [handleTouchMove, handleTouchEnd];
+  return { handleTouchMove, handleTouchEnd };
 };
 
 export default useTap;
