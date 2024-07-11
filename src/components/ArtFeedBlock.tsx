@@ -15,7 +15,8 @@ function ArtFeedBlock(props: ArtFeedBlockProps) {
         <ArtBlock
           artParams={props.artParams}
           size={props.size}
-          onTouchStart={props.onFullscreenClick}
+          onTap={props.onFullscreenClick}
+          // onTap={() => console.log("tapped")}
         />
         <Fullscreen
           className="hidden absolute top-2 right-2 cursor-pointer hover:bg-slate-200 hover:bg-opacity-50 rounded-xl p-0.5 group-hover:block"
@@ -48,12 +49,12 @@ import React, { useState } from "react";
 
 const PostDetails = (details: PostDetailsProps) => {
   return (
-    <div className="flex flex-row justify-between items-start">
+    <div className="flex flex-row justify-between items-start text-xs">
       <div className="flex flex-col">
-        <div className="text-slate-600 text-xs font-semibold">
+        <div className="text-slate-600 font-semibold">
           {formatTimeSince(new Date(details.createdAt))}
         </div>
-        <div className="text-slate-700 text-s font-semibold">
+        <div className="text-slate-700 md:text-s font-semibold">
           {details.user.username}
         </div>
       </div>
@@ -68,10 +69,7 @@ const PostDetails = (details: PostDetailsProps) => {
             className="tooltip tooltip-right"
             data-tip="Right click canvas to save image"
           >
-            <Download
-              className="cursor-pointer  hover:text-black rounded-sm"
-              size={18}
-            />
+            <Download className="cursor-pointer  w-3 h-3 md:w-4 md:h-4 hover:text-black rounded-sm" />
           </div>
         )}
       </div>

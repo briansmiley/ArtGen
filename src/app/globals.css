@@ -13,15 +13,3 @@
     @apply bg-blue-700;
   }
 }
-/* this doesnt work apparently */
-/* @layer base {
-  input[type="color"] {
-    border: none;
-  }
-  ::-webkit-color-swatch {
-    border: none;
-  }
-  ::-moz-color-swatch {
-    border: none;
-  }
-} */
