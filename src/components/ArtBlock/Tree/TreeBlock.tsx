@@ -1,35 +1,58 @@
 import { TreeBlockParams } from "@/services/ArtBlock.types";
-import { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import generateTree from "./generate";
 import Konvas from "./Konvas";
 import { Tree } from ".";
+import Konva from "konva";
+
+const downloadCallback = (
+  canvasRef: React.RefObject<Konva.Stage>,
+  downloadSize: number = 1500
+) => {
+  return () => {
+    if (!canvasRef.current) {
+      console.error("canvasRef is null");
+    }
+    const link = document.createElement("a");
+    link.download = "tree.png";
+    const canvas = canvasRef.current;
+    const canvasWidth = canvas.width();
+    link.href = canvasRef.current.toDataURL({
+      pixelRatio: downloadSize / canvasWidth
+    });
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+};
 
 const TreeBlock: Tree["Display"] = params => {
   const { branches, boundaries } = useMemo(
     () => generateTree(params.artParams),
     [params]
   );
+  const canvasRef = useRef<Konva.Stage>(null);
+  useEffect(() => {
+    if (!params.downloadSetter) {
+      console.log(params.downloadSetter);
+      return;
+    }
+    params.downloadSetter({ callback: downloadCallback(canvasRef) });
+  }, [canvasRef.current]);
+
   return (
     <div
       style={{
         backgroundColor: params.artParams.backgroundColor
-        // width: params.size,
-        // height: params.size
       }}
     >
-      {/*debug: just display all the param values*/}
-      {/* {Object.entries(params).map(([key, value]) => (
-        <div key={key}>
-          {key}: {value}
-        </div>
-      ))}
-      Tree Size: {branches.length} */}
       <Konvas
         branches={branches}
         boundaries={boundaries}
         width={params.size}
         height={params.size}
         backgroundColor={params.artParams.backgroundColor}
+        canvasRef={canvasRef}
       />
     </div>
   );
