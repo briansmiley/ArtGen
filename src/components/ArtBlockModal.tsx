@@ -36,11 +36,7 @@ const ArtBlockModal = ({ blockData, closeOnClick }: ArtBlockModalProps) => {
           <X size={size / 20} onClick={closeOnClick} />
         </div>
         <div className="absolute bottom-2 right-2 cursor-pointer bg-slate-600 text-slate-200 opacity-50 hover:opacity-95 rounded-full flex items-center justify-center p-[5px]">
-          <Download
-            className=""
-            size={size / 20}
-            onClick={downloadCallback.callback}
-          />
+          <Download size={size / 20} onClick={downloadCallback.callback} />
         </div>
       </div>
     </div>
