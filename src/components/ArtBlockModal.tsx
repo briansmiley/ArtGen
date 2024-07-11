@@ -32,16 +32,12 @@ const ArtBlockModal = ({ blockData, closeOnClick }: ArtBlockModalProps) => {
           onTap={closeOnClick}
           downloadSetter={setDownloadCallback}
         />
-        <X
-          className="absolute top-2 right-2 cursor-pointer bg-slate-600 text-slate-200 opacity-50 hover:opacity-95 rounded-full"
-          size={size / 20}
-          onClick={closeOnClick}
-        />
-        <Download
-          className="absolute bottom-2 right-2 cursor-pointer bg-slate-600 text-slate-200 opacity-50 hover:opacity-95 p-2 rounded-full"
-          size={5 + size / 20}
-          onClick={downloadCallback.callback}
-        />
+        <div className="absolute top-2 right-2 cursor-pointer bg-slate-600 text-slate-200 opacity-50 hover:opacity-95 rounded-full flex items-center justify-center p-[5px]">
+          <X size={size / 20} onClick={closeOnClick} />
+        </div>
+        <div className="absolute bottom-2 right-2 cursor-pointer bg-slate-600 text-slate-200 opacity-50 hover:opacity-95 rounded-full flex items-center justify-center p-[5px]">
+          <Download size={size / 20} onClick={downloadCallback.callback} />
+        </div>
       </div>
     </div>
   );

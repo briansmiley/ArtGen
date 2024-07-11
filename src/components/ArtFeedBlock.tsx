@@ -19,7 +19,7 @@ function ArtFeedBlock(props: ArtFeedBlockProps) {
           // onTap={() => console.log("tapped")}
         />
         <Fullscreen
-          className="hidden absolute top-1 right-1 cursor-pointer bg-slate-600 text-slate-200 opacity-25 hover:opacity-95 rounded-lg p-0.5 group-hover:block"
+          className="hidden absolute top-1 right-1 cursor-pointer bg-slate-600 text-slate-200 opacity-25 hover:opacity-75 rounded-lg p-0.5 group-hover:block"
           size={24}
           onClick={props.onFullscreenClick}
         />
