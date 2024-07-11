@@ -1,4 +1,4 @@
-import { Stage, Layer, Rect } from "react-konva";
+import { Stage, Layer, Rect, Group } from "react-konva";
 import { Trapezoid } from "./Trapezoid";
 import { Branch, Point } from "./generate";
 
@@ -42,13 +42,7 @@ const Konvas = (props: KonvasProps) => {
     0.9 * Math.min(width / treeTotalDims.width, height / treeTotalDims.height); //scale factor to fit the tree in the canvas
   return (
     <Stage width={width} height={height}>
-      <Layer
-        scale={{ x: canvasFitScaleFactor, y: canvasFitScaleFactor }}
-        offset={{
-          x: -width / 2 / canvasFitScaleFactor + xMidpoint,
-          y: -height / canvasFitScaleFactor + 1.1 * bottomYPositiveSpace
-        }}
-      >
+      <Layer>
         {/* background */}
         <Rect
           x={0}
@@ -57,22 +51,30 @@ const Konvas = (props: KonvasProps) => {
           height={height}
           fill={backgroundColor}
         />
-        {/* tree branches */}
-        {branches.map((branch, idx) => (
-          <Trapezoid
-            key={`branches${idx}`}
-            x={branch.origin.x}
-            y={branch.origin.y}
-            startWidth={branch.startWidth}
-            endWidth={branch.endWidth}
-            length={branch.length}
-            fill={branch.color}
-            stroke={branch.color}
-            strokeWidth={0}
-            rotation={180 + branch.angle}
-            roundEnds={true}
-          />
-        ))}
+        <Group
+          scale={{ x: canvasFitScaleFactor, y: canvasFitScaleFactor }}
+          offset={{
+            x: -width / 2 / canvasFitScaleFactor + xMidpoint,
+            y: -height / canvasFitScaleFactor + 1.1 * bottomYPositiveSpace
+          }}
+        >
+          {/* tree branches */}
+          {branches.map((branch, idx) => (
+            <Trapezoid
+              key={`branches${idx}`}
+              x={branch.origin.x}
+              y={branch.origin.y}
+              startWidth={branch.startWidth}
+              endWidth={branch.endWidth}
+              length={branch.length}
+              fill={branch.color}
+              stroke={branch.color}
+              strokeWidth={0}
+              rotation={180 + branch.angle}
+              roundEnds={true}
+            />
+          ))}
+        </Group>
       </Layer>
     </Stage>
   );
