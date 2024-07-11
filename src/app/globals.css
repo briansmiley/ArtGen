@@ -13,11 +13,3 @@
     @apply bg-blue-700;
   }
 }
-
-@layer components {
-  @media (hover: none) {
-    .noShowOnHover {
-      display: none;
-    }
-  }
-}
