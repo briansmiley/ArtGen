@@ -16,8 +16,8 @@ type SupportedDisplayParams = ComponentProps<
 export interface ArtBlockProps {
   artParams: SupportedDisplayParams["artParams"];
   size?: SupportedDisplayParams["size"];
-  onTap?: (e: React.TouchEvent<HTMLDivElement>) => void;
-  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onTap?: (e?: React.TouchEvent<HTMLDivElement>) => void;
+  onClick?: (e?: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 // union of types and params for the supported art blocks
@@ -26,13 +26,14 @@ export interface ArtBlockProps {
 export default function ArtBlock(props: ArtBlockProps) {
   const artType = props.artParams.artType;
   const { handleTouchMove, handleTouchEnd } = useTap();
+
   switch (artType) {
     case "color":
       return (
         <div
           onClick={props.onClick}
           onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd(() => props.onTap)}
+          onTouchEnd={handleTouchEnd(props.onTap)}
         >
           <color.Display artParams={props.artParams} size={props.size || 350} />
         </div>
@@ -42,7 +43,7 @@ export default function ArtBlock(props: ArtBlockProps) {
         <div
           onClick={props.onClick}
           onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd(() => props.onTap)}
+          onTouchEnd={handleTouchEnd(props.onTap)}
         >
           <tree.Display artParams={props.artParams} size={props.size || 350} />
         </div>
