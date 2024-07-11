@@ -26,7 +26,6 @@ export interface ArtBlockProps {
 export default function ArtBlock(props: ArtBlockProps) {
   const artType = props.artParams.artType;
   const { handleTouchMove, handleTouchEnd } = useTap();
-
   switch (artType) {
     case "color":
       return (
