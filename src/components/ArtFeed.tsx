@@ -48,7 +48,6 @@ export default function ArtFeed() {
     useState<ArtBlockDataLocal>({} as ArtBlockDataLocal); //current block to focus in modal
   const [feedBlockSize, setFeedBlockSize] = useState(initialBlockSize); //size for artblocks in the feed
   const [loading, setLoading] = useState(false); //flag to show loading state
-  const [touchMove, touchEnd] = useTap();
 
   //function to set the current zoomed block data and show modal
   const onFullscreenClick = (artBlock: ArtBlockDataLocal) => () => {

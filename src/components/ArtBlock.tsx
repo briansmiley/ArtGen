@@ -4,6 +4,7 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import color from "./ArtBlock/Color";
 import tree from "./ArtBlock/Tree";
 import { ComponentProps } from "react";
+import useTap from "@/app/hooks/useTap";
 
 const SupportedArtBlocks = [color, tree];
 
@@ -15,7 +16,7 @@ type SupportedDisplayParams = ComponentProps<
 export interface ArtBlockProps {
   artParams: SupportedDisplayParams["artParams"];
   size?: SupportedDisplayParams["size"];
-  onTouchStart?: (e: React.TouchEvent<HTMLDivElement>) => void;
+  onTap?: (e: React.TouchEvent<HTMLDivElement>) => void;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
@@ -24,17 +25,25 @@ export interface ArtBlockProps {
 
 export default function ArtBlock(props: ArtBlockProps) {
   const artType = props.artParams.artType;
-
+  const { handleTouchMove, handleTouchEnd } = useTap();
   switch (artType) {
     case "color":
       return (
-        <div onClick={props.onClick} onTouchStart={props.onTouchStart}>
+        <div
+          onClick={props.onClick}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd(() => props.onTap)}
+        >
           <color.Display artParams={props.artParams} size={props.size || 350} />
         </div>
       );
     case "tree":
       return (
-        <div onClick={props.onClick} onTouchStart={props.onTouchStart}>
+        <div
+          onClick={props.onClick}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd(() => props.onTap)}
+        >
           <tree.Display artParams={props.artParams} size={props.size || 350} />
         </div>
       );
