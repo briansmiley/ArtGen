@@ -156,10 +156,6 @@ const ArtBlockSkeleton = ({ size }: { size: number }) => {
           className="skeleton rounded-xl animate-pulse"
           style={{ width: (150 / 350) * size, height: (30 / 350) * size }}
         ></div>
-        <div
-          className="skeleton rounded-full animate-pulse"
-          style={{ width: (30 / 350) * size, height: (30 / 350) * size }}
-        ></div>
       </div>
     </div>
   );

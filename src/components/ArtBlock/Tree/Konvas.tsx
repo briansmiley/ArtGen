@@ -1,6 +1,7 @@
 import { Stage, Layer, Rect, Group } from "react-konva";
 import { Trapezoid } from "./Trapezoid";
 import { Branch, Point } from "./generate";
+import Konva from "konva";
 
 /**
    interface TrapezoidProps {
@@ -25,6 +26,7 @@ interface KonvasProps {
     topLeft: Point;
     bottomRight: Point;
   };
+  canvasRef: React.RefObject<Konva.Stage>;
 }
 const Konvas = (props: KonvasProps) => {
   const { width, height, backgroundColor, branches, boundaries } = props;
@@ -41,7 +43,7 @@ const Konvas = (props: KonvasProps) => {
   const canvasFitScaleFactor =
     0.9 * Math.min(width / treeTotalDims.width, height / treeTotalDims.height); //scale factor to fit the tree in the canvas
   return (
-    <Stage width={width} height={height}>
+    <Stage width={width} height={height} ref={props.canvasRef}>
       <Layer>
         {/* background */}
         <Rect

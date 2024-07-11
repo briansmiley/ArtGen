@@ -18,6 +18,7 @@ export interface ArtBlockProps {
   size?: SupportedDisplayParams["size"];
   onTap?: (e?: React.TouchEvent<HTMLDivElement>) => void;
   onClick?: (e?: React.MouseEvent<HTMLDivElement>) => void;
+  downloadSetter?: (obj: { callback: () => void }) => void;
 }
 
 // union of types and params for the supported art blocks
@@ -44,7 +45,11 @@ export default function ArtBlock(props: ArtBlockProps) {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd(props.onTap)}
         >
-          <tree.Display artParams={props.artParams} size={props.size || 350} />
+          <tree.Display
+            artParams={props.artParams}
+            size={props.size || 350}
+            downloadSetter={props.downloadSetter}
+          />
         </div>
       );
     default:

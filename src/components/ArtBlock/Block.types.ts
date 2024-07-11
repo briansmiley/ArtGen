@@ -5,6 +5,7 @@ type ControlProps<AT, S> = {
 type DisplayProps<AT, S> = {
   artParams: { artType: AT } & S;
   size?: number;
+  downloadSetter?: (obj: { callback: () => void }) => void;
 };
 
 export type BlockInterface<AT, SpecificArtBlockProps> = {

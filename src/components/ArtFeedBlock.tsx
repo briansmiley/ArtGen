@@ -64,14 +64,6 @@ const PostDetails = (details: PostDetailsProps) => {
           liked={details.liked}
           artId={details.artId}
         />
-        {details.artType === "tree" && (
-          <div
-            className="tooltip tooltip-right"
-            data-tip="Right click canvas to save image"
-          >
-            <Download className="cursor-pointer  w-3 h-3 md:w-4 md:h-4 hover:text-black rounded-sm" />
-          </div>
-        )}
       </div>
     </div>
   );
