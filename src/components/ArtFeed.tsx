@@ -3,15 +3,27 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ArtBlock, { ArtBlockProps } from "./ArtBlock";
 import { GetArtBlocksResponse } from "@/app/api/feed/route";
 import { ArtBlockDataLocal } from "@/services/ArtBlock";
 import ArtFeedBlock from "./ArtFeedBlock";
 import ArtBlockModal from "./ArtBlockModal";
+import useTap from "@/app/hooks/useTap";
 
-//hard coded for now size for feed blocks
-const feedBlockSize = 300;
+//function that returns the sizes the artblocks should be for small and large screens to fit
+interface BlockSizeArgs {
+  s: number; //number of blocks to fit on small screens
+  l: number; //number of blocks to fit on large screens
+}
+//calculates the size of an artblock to fit
+const blockSize = (counts: BlockSizeArgs) => {
+  const breakpoint = 640; //when to switch from small to large
+  const rowCount = window.innerWidth < breakpoint ? counts.s : counts.l;
+  return (window.innerWidth / rowCount) * 0.8;
+};
+const counts = { s: 3, l: 5 }; //hard coded data for how mnay blocks to fit on small and large screens
+const initialBlockSize = blockSize(counts); //initial value for useState
 /**Query db for a batch of blocks and whether there are more to get */
 const fetchArtBlocks = async (
   artBlocks: ArtBlockDataLocal[]
@@ -31,10 +43,12 @@ const fetchArtBlocks = async (
 export default function ArtFeed() {
   const [artBlocks, setArtBlocks] = useState<ArtBlockDataLocal[]>([]); //array of ArtBlockDataLocal objects
   const [moreToFetch, setMoreToFetch] = useState(true); //flag sets to false when db says we have exhausted all blocks
-  const [showModal, setShowModal] = useState(false); //flag to show modal
+  const [showModal, setShowModal] = useState(false); //flag to show modal zoom
   const [currentZoomedBlockData, setCurrentZoomedBlockData] =
-    useState<ArtBlockDataLocal>({} as ArtBlockDataLocal); //current block that is being zoomed in on
+    useState<ArtBlockDataLocal>({} as ArtBlockDataLocal); //current block to focus in modal
+  const [feedBlockSize, setFeedBlockSize] = useState(initialBlockSize); //size for artblocks in the feed
   const [loading, setLoading] = useState(false); //flag to show loading state
+  const [touchMove, touchEnd] = useTap();
 
   //function to set the current zoomed block data and show modal
   const onFullscreenClick = (artBlock: ArtBlockDataLocal) => () => {
@@ -50,6 +64,12 @@ export default function ArtFeed() {
     setLoading(false);
   };
 
+  //one time useEffect to set up a resizer for blocks at window resize
+  useEffect(() => {
+    const changeBlockSize = () => setFeedBlockSize(blockSize(counts));
+    window.addEventListener("resize", changeBlockSize);
+    return () => window.removeEventListener("resize", changeBlockSize);
+  }, []);
   //fetch *one* batch of blocks on initial load
   useEffect(() => {
     setLoading(true);
