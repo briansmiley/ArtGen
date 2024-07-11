@@ -15,6 +15,9 @@ const config: Config = {
       }
     }
   },
+  future: {
+    hoverOnlyWhenSupported: true
+  },
   plugins: [require("daisyui")]
 };
 export default config;
