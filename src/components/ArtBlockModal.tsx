@@ -1,5 +1,5 @@
 import { ArtBlockDataLocal } from "@/services/ArtBlock";
-import { X } from "lucide-react";
+import { Download, X } from "lucide-react";
 import ArtBlock from "./ArtBlock";
 import { useEffect, useMemo, useState } from "react";
 
@@ -29,6 +29,11 @@ const ArtBlockModal = ({ blockData, closeOnClick }: ArtBlockModalProps) => {
           className="absolute top-2 right-2 cursor-pointer hover:bg-slate-600 hover:text-slate-200 rounded-full"
           size={size / 20}
           onClick={closeOnClick}
+        />
+        <Download
+          className="absolute bottom-2 right-2 cursor-pointer  hover:text-slate-900"
+          size={size / 20}
+          // onClick={downloadOnClick}
         />
       </div>
     </div>
