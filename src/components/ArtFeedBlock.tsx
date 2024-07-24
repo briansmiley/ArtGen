@@ -75,18 +75,18 @@ const PostDetails = (details: PostDetailsProps) => {
 const formatTimeSince = (date: Date): string => {
   const timeUnits = [
     //time units and the number of seconds in each unit and the maximum number of a given unit to use before moving on to the larger one
-    { unit: "second", seconds: 1, max: 59 },
-    { unit: "minute", seconds: 60, max: 59 },
-    { unit: "hour", seconds: 3600, max: 23 },
-    { unit: "day", seconds: 86400, max: 6 },
-    { unit: "week", seconds: 604800, max: 1 },
-    { unit: "fortnight", seconds: 1209600, max: 2 },
-    { unit: "month", seconds: 2592000, max: 11 },
+    { unit: "second", seconds: 1, max: 60 },
+    { unit: "minute", seconds: 60, max: 60 },
+    { unit: "hour", seconds: 3600, max: 24 },
+    { unit: "day", seconds: 86400, max: 7 },
+    { unit: "week", seconds: 604800, max: 2 },
+    { unit: "fortnight", seconds: 1209600, max: 3 },
+    { unit: "month", seconds: 2592000, max: 12 },
     { unit: "year", seconds: 31536000, max: 100 }
   ];
   const secondsSince = Math.floor((Date.now() - date.getTime()) / 1000); //seconds since the date object was created
   const timeUnit = timeUnits.find(
-    unit => secondsSince <= unit.seconds * unit.max
+    unit => secondsSince < unit.seconds * unit.max
   ); //find the smallest unit where we are under the threshhold to move on to a bigger unit
   if (!timeUnit)
     return "a long time ago"; //if we can't find a unit, return a ––––ic message
