@@ -86,7 +86,7 @@ const formatTimeSince = (date: Date): string => {
   ];
   const secondsSince = Math.floor((Date.now() - date.getTime()) / 1000); //seconds since the date object was created
   const timeUnit = timeUnits.find(
-    unit => secondsSince < unit.seconds * unit.max
+    unit => secondsSince <= unit.seconds * unit.max
   ); //find the smallest unit where we are under the threshhold to move on to a bigger unit
   if (!timeUnit)
     return "a long time ago"; //if we can't find a unit, return a ––––ic message
