@@ -89,7 +89,7 @@ export default function ArtFeed() {
         className="text-5xl   mb-5 font-mono font-bold"
         style={{ textShadow: "1px 1px 3px #002000" }}
       >
-        GenArt Feed
+        ArtGen Feed
       </span>
       {/* display zoomed in focus view */}
       {showModal && (
